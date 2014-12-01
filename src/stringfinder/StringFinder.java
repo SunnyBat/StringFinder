@@ -13,10 +13,7 @@ import stringfinder.update.UpdateHandler;
  */
 public class StringFinder {
 
-  public static final String VERSION = "1.0.2";
-  public static final String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
-    "SecondTest", "ASDFASDFASDF This is another test!",
-    "ThirdTest", "ASDFASDFADSF Yet another!"};
+  public static final String VERSION = "1.0.3";
 
   /**
    * @param args the command line arguments

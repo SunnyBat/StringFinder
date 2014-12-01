@@ -26,6 +26,7 @@ public class WordDisplay extends javax.swing.JFrame {
       }
       model.addRow(sArray);
     }
+    setLocationRelativeTo(null);
     setVisible(true);
   }
 

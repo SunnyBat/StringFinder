@@ -41,6 +41,19 @@ public class WordStorage {
     }
   }
 
+  public static synchronized void exportDefinitions() {
+    try {
+      String path = StringFinder.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+      PrintStream write = new PrintStream(new File(path.substring(0, path.lastIndexOf(".jar")) + ".defs.txt"));
+      for (Word w : wordList) {
+        write.println(w.getWord());
+        write.println(w.getDefinition());
+      }
+      write.close();
+    } catch (Exception e) {
+    }
+  }
+
   public static synchronized String getWord(String def) {
     for (Word w : wordList) {
       if (w.getDefinition().toLowerCase().contains(def.toLowerCase())) {

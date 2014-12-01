@@ -20,6 +20,7 @@ public class MainWindow extends javax.swing.JFrame {
    */
   public MainWindow() {
     initComponents();
+    setLocationRelativeTo(null);
   }
 
   /**
@@ -39,6 +40,7 @@ public class MainWindow extends javax.swing.JFrame {
     JBLoadDefsFromFile = new javax.swing.JButton();
     JBClipboardReplacing = new javax.swing.JButton();
     JCShowWords = new javax.swing.JButton();
+    jButton1 = new javax.swing.JButton();
 
     jLabel3.setText("jLabel3");
 
@@ -81,6 +83,13 @@ public class MainWindow extends javax.swing.JFrame {
       }
     });
 
+    jButton1.setText("Export Definitions");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton1ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -88,7 +97,6 @@ public class MainWindow extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(JCShowWords, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel2)
@@ -101,7 +109,11 @@ public class MainWindow extends javax.swing.JFrame {
           .addGroup(layout.createSequentialGroup()
             .addComponent(JBLoadDefsFromFile)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-            .addComponent(JBClipboardReplacing)))
+            .addComponent(JBClipboardReplacing))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jButton1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(JCShowWords)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -122,7 +134,9 @@ public class MainWindow extends javax.swing.JFrame {
           .addComponent(JBLoadDefsFromFile)
           .addComponent(JBClipboardReplacing))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(JCShowWords)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(JCShowWords)
+          .addComponent(jButton1))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -143,7 +157,7 @@ public class MainWindow extends javax.swing.JFrame {
   private void JBLoadDefsFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLoadDefsFromFileActionPerformed
     // TODO add your handling code here:
     JFileChooser chooser = new JFileChooser();
-    chooser.setCurrentDirectory(new java.io.File(System.getenv("APPDATA")));
+    chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home") + "\\Desktop"));
     chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("All Files", "txt"));
     chooser.setFileHidingEnabled(false);
@@ -178,12 +192,18 @@ public class MainWindow extends javax.swing.JFrame {
     myDisplay = new WordDisplay();
   }//GEN-LAST:event_JCShowWordsActionPerformed
 
+  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    // TODO add your handling code here:
+    WordStorage.exportDefinitions();
+  }//GEN-LAST:event_jButton1ActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton JBClipboardReplacing;
   private javax.swing.JButton JBLoadDefsFromFile;
   private javax.swing.JButton JCShowWords;
   private javax.swing.JTextField JTFQuestionText;
   private javax.swing.JTextField JTFWord;
+  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
