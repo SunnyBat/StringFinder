@@ -15,11 +15,11 @@ import stringfinder.update.UpdateHandler;
  */
 public class StringFinder {
 
-  public static final String VERSION = "1.0.1";
+  public static final String VERSION = "1.0.2";
   public static final String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
     "SecondTest", "ASDFASDFASDF This is another test!",
     "ThirdTest", "ASDFASDFADSF Yet another!"};
-  private static final ArrayList<word> wordList = new ArrayList<>();
+  public static final ArrayList<word> wordList = new ArrayList<>();
 
   /**
    * @param args the command line arguments
@@ -71,13 +71,13 @@ public class StringFinder {
   public static String getWord(String def) {
     for (word w : wordList) {
       if (w.getDefinition().toLowerCase().contains(def.toLowerCase())) {
-        return w.word;
+        return w.getWord();
       }
     }
     return "[NOT FOUND]";
   }
 
-  private static class word {
+  public static class word {
 
     private final String definition;
     private final String word;
@@ -86,6 +86,10 @@ public class StringFinder {
       definition = def;
       word = wrd;
       System.out.println("New word ~~ " + word + " :: " + definition);
+    }
+
+    public String getWord() {
+      return word;
     }
 
     public String getDefinition() {

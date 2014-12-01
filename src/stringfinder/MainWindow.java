@@ -13,6 +13,8 @@ import javax.swing.JFileChooser;
  */
 public class MainWindow extends javax.swing.JFrame {
 
+  private WordDisplay myDisplay;
+
   /**
    * Creates new form MainWindow
    */
@@ -31,11 +33,12 @@ public class MainWindow extends javax.swing.JFrame {
     jLabel3 = new javax.swing.JLabel();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
-    jTextField1 = new javax.swing.JTextField();
+    JTFQuestionText = new javax.swing.JTextField();
     jLabel4 = new javax.swing.JLabel();
-    jTextField2 = new javax.swing.JTextField();
-    jButton1 = new javax.swing.JButton();
-    jButton2 = new javax.swing.JButton();
+    JTFWord = new javax.swing.JTextField();
+    JBLoadDefsFromFile = new javax.swing.JButton();
+    JBClipboardReplacing = new javax.swing.JButton();
+    JCShowWords = new javax.swing.JButton();
 
     jLabel3.setText("jLabel3");
 
@@ -49,25 +52,32 @@ public class MainWindow extends javax.swing.JFrame {
 
     jLabel2.setText("Question Text:");
 
-    jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+    JTFQuestionText.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyTyped(java.awt.event.KeyEvent evt) {
-        jTextField1KeyTyped(evt);
+        JTFQuestionTextKeyTyped(evt);
       }
     });
 
     jLabel4.setText("Word:");
 
-    jButton1.setText("Load Definitions From File");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    JBLoadDefsFromFile.setText("Load Definitions From File");
+    JBLoadDefsFromFile.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton1ActionPerformed(evt);
+        JBLoadDefsFromFileActionPerformed(evt);
       }
     });
 
-    jButton2.setText("Enable Clipboard Replacing");
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
+    JBClipboardReplacing.setText("Enable Clipboard Replacing");
+    JBClipboardReplacing.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton2ActionPerformed(evt);
+        JBClipboardReplacingActionPerformed(evt);
+      }
+    });
+
+    JCShowWords.setText("Show Registered Words");
+    JCShowWords.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        JCShowWordsActionPerformed(evt);
       }
     });
 
@@ -78,19 +88,20 @@ public class MainWindow extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(JCShowWords, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel2)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jTextField1))
+            .addComponent(JTFQuestionText))
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel4)
             .addGap(46, 46, 46)
-            .addComponent(jTextField2))
+            .addComponent(JTFWord))
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jButton1)
+            .addComponent(JBLoadDefsFromFile)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-            .addComponent(jButton2)))
+            .addComponent(JBClipboardReplacing)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -101,33 +112,35 @@ public class MainWindow extends javax.swing.JFrame {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel2)
-          .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(JTFQuestionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel4)
-          .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(JTFWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton1)
-          .addComponent(jButton2))
+          .addComponent(JBLoadDefsFromFile)
+          .addComponent(JBClipboardReplacing))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(JCShowWords)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+  private void JTFQuestionTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTFQuestionTextKeyTyped
     // TODO add your handling code here:
     if (evt.getKeyChar() == 10) {
       System.out.println("Enter pressed!");
-      jTextField2.setText(StringFinder.getWord(jTextField1.getText()));
-      jTextField1.setText("");
+      JTFWord.setText(StringFinder.getWord(JTFQuestionText.getText()));
+      JTFQuestionText.setText("");
     } else {
       System.out.println(evt.getKeyChar());
     }
-  }//GEN-LAST:event_jTextField1KeyTyped
+  }//GEN-LAST:event_JTFQuestionTextKeyTyped
 
-  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+  private void JBLoadDefsFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLoadDefsFromFileActionPerformed
     // TODO add your handling code here:
     JFileChooser chooser = new JFileChooser();
     chooser.setCurrentDirectory(new java.io.File(System.getenv("APPDATA")));
@@ -135,36 +148,45 @@ public class MainWindow extends javax.swing.JFrame {
     chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("All Files", "txt"));
     chooser.setFileHidingEnabled(false);
     chooser.setAcceptAllFileFilterUsed(false);
-    chooser.setDialogTitle("Select Firefox Cookie Database");
+    chooser.setDialogTitle("Select Definitions File");
     chooser.setVisible(true);
     if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
       StringFinder.loadDefinitions(chooser.getSelectedFile());
     } else {
       System.out.println("No Selection ");
     }
-  }//GEN-LAST:event_jButton1ActionPerformed
+  }//GEN-LAST:event_JBLoadDefsFromFileActionPerformed
 
-  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+  private void JBClipboardReplacingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBClipboardReplacingActionPerformed
     // TODO add your handling code here:
     if (Replacer.isReplacing()) {
       System.out.println("Stopping.");
       Replacer.stopReplacing();
-      jButton2.setText("Enable Clipboard Replacing");
+      JBClipboardReplacing.setText("Enable Clipboard Replacing");
     } else {
       System.out.println("Starting.");
       Replacer.startReplacing();
-      jButton2.setText("Disable Clipboard Replacing");
+      JBClipboardReplacing.setText("Disable Clipboard Replacing");
     }
-  }//GEN-LAST:event_jButton2ActionPerformed
+  }//GEN-LAST:event_JBClipboardReplacingActionPerformed
+
+  private void JCShowWordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCShowWordsActionPerformed
+    // TODO add your handling code here:
+    if (myDisplay != null) {
+      myDisplay.dispose();
+    }
+    myDisplay = new WordDisplay();
+  }//GEN-LAST:event_JCShowWordsActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
+  private javax.swing.JButton JBClipboardReplacing;
+  private javax.swing.JButton JBLoadDefsFromFile;
+  private javax.swing.JButton JCShowWords;
+  private javax.swing.JTextField JTFQuestionText;
+  private javax.swing.JTextField JTFWord;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
-  private javax.swing.JTextField jTextField1;
-  private javax.swing.JTextField jTextField2;
   // End of variables declaration//GEN-END:variables
 }
