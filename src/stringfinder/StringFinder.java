@@ -15,7 +15,7 @@ import stringfinder.update.UpdateHandler;
  */
 public class StringFinder {
 
-  public static final String VERSION = "1.0.0";
+  public static final String VERSION = "1.0.1";
   public static final String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
     "SecondTest", "ASDFASDFASDF This is another test!",
     "ThirdTest", "ASDFASDFADSF Yet another!"};
@@ -34,20 +34,9 @@ public class StringFinder {
     if (UpdateHandler.updateAvailable()) {
       UpdateHandler.promptUpdate(args);
     }
-    loadBaseDefinitions();
-    while (true) {
-      String s = ClipboardManager.getStringFromClipboard();
-      if (s != null) {
-        System.out.println("String found: " + s);
-        System.out.println("Word: " + getWord(s));
-        if (!getWord(s).equalsIgnoreCase("[NOT FOUND]")) {
-          ClipboardManager.setClipboardContents(getWord(s));
-        }
-      } else {
-        try {
-          Thread.sleep(200);
-        } catch (InterruptedException iE) {
-        }
+    if (args.length >= 1) {
+      if (args[0].equals("-basedefs")) {
+        loadBaseDefinitions();
       }
     }
   }
@@ -73,7 +62,6 @@ public class StringFinder {
       while (scan.hasNext()) {
         String word = scan.nextLine();
         String def = scan.nextLine();
-        System.out.println(word + " :: " + def);
         wordList.add(new word(word, def));
       }
     } catch (FileNotFoundException e) {
@@ -97,6 +85,7 @@ public class StringFinder {
     public word(String wrd, String def) {
       definition = def;
       word = wrd;
+      System.out.println("New word ~~ " + word + " :: " + definition);
     }
 
     public String getDefinition() {

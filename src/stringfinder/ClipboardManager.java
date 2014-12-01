@@ -7,7 +7,6 @@ package stringfinder;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
-import java.io.IOException;
 
 /**
  *
@@ -35,6 +34,9 @@ public class ClipboardManager {
       resetClipboard();
       fails = 0;
       return result;
+    } catch (java.awt.datatransfer.UnsupportedFlavorException ufe) {
+      System.out.println("Unsupported Flavor -- Clipboard does not contain text.");
+      resetClipboard();
     } catch (Exception e) {
       e.printStackTrace();
       fails++;
@@ -60,7 +62,7 @@ public class ClipboardManager {
   private static void checkFails() {
     if (fails >= 100) {
       System.out.println("ERROR: Too many consecutive fails! Exiting program.");
-      System.exit(0);
+      System.exit(1);
     }
   }
 
