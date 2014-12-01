@@ -5,8 +5,6 @@
  */
 package stringfinder;
 
-import java.io.*;
-import java.util.*;
 import stringfinder.update.UpdateHandler;
 
 /**
@@ -19,7 +17,6 @@ public class StringFinder {
   public static final String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
     "SecondTest", "ASDFASDFASDF This is another test!",
     "ThirdTest", "ASDFASDFADSF Yet another!"};
-  public static final ArrayList<word> wordList = new ArrayList<>();
 
   /**
    * @param args the command line arguments
@@ -36,64 +33,8 @@ public class StringFinder {
     }
     if (args.length >= 1) {
       if (args[0].equals("-basedefs")) {
-        loadBaseDefinitions();
+        WordStorage.loadBaseDefinitions();
       }
-    }
-  }
-
-  private static void loadBaseDefinitions() {
-    String tempWord = null;
-    for (String s : BASE_DEFS) {
-      if (tempWord == null) {
-        tempWord = s;
-      } else {
-        wordList.add(new word(tempWord, s));
-        tempWord = null;
-      }
-    }
-  }
-
-  public static void loadDefinitions(File f) {
-    if (f == null) {
-      return;
-    }
-    try {
-      Scanner scan = new Scanner(f);
-      while (scan.hasNext()) {
-        String word = scan.nextLine();
-        String def = scan.nextLine();
-        wordList.add(new word(word, def));
-      }
-    } catch (FileNotFoundException e) {
-    }
-  }
-
-  public static String getWord(String def) {
-    for (word w : wordList) {
-      if (w.getDefinition().toLowerCase().contains(def.toLowerCase())) {
-        return w.getWord();
-      }
-    }
-    return "[NOT FOUND]";
-  }
-
-  public static class word {
-
-    private final String definition;
-    private final String word;
-
-    public word(String wrd, String def) {
-      definition = def;
-      word = wrd;
-      System.out.println("New word ~~ " + word + " :: " + definition);
-    }
-
-    public String getWord() {
-      return word;
-    }
-
-    public String getDefinition() {
-      return definition;
     }
   }
 

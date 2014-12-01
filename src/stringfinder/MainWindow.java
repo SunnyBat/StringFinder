@@ -133,7 +133,7 @@ public class MainWindow extends javax.swing.JFrame {
     // TODO add your handling code here:
     if (evt.getKeyChar() == 10) {
       System.out.println("Enter pressed!");
-      JTFWord.setText(StringFinder.getWord(JTFQuestionText.getText()));
+      JTFWord.setText(WordStorage.getWord(JTFQuestionText.getText()));
       JTFQuestionText.setText("");
     } else {
       System.out.println(evt.getKeyChar());
@@ -151,7 +151,7 @@ public class MainWindow extends javax.swing.JFrame {
     chooser.setDialogTitle("Select Definitions File");
     chooser.setVisible(true);
     if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-      StringFinder.loadDefinitions(chooser.getSelectedFile());
+      WordStorage.loadDefinitions(chooser.getSelectedFile());
     } else {
       System.out.println("No Selection ");
     }

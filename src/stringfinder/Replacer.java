@@ -18,9 +18,9 @@ public class Replacer {
         String s = ClipboardManager.getStringFromClipboard();
         if (s != null) {
           System.out.println("String found: " + s);
-          System.out.println("Word: " + StringFinder.getWord(s));
-          if (!StringFinder.getWord(s).equalsIgnoreCase("[NOT FOUND]")) {
-            ClipboardManager.setClipboardContents(StringFinder.getWord(s));
+          System.out.println("Word: " + WordStorage.getWord(s));
+          if (!WordStorage.getWord(s).equalsIgnoreCase("[NOT FOUND]")) {
+            ClipboardManager.setClipboardContents(WordStorage.getWord(s));
           }
         } else {
           try {
