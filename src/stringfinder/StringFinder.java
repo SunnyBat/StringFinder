@@ -7,6 +7,7 @@ package stringfinder;
 
 import java.io.*;
 import java.util.*;
+import stringfinder.update.UpdateHandler;
 
 /**
  *
@@ -14,7 +15,8 @@ import java.util.*;
  */
 public class StringFinder {
 
-  public static String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
+  public static final String VERSION = "1.0.0";
+  public static final String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
     "SecondTest", "ASDFASDFASDF This is another test!",
     "ThirdTest", "ASDFASDFADSF Yet another!"};
   private static final ArrayList<word> wordList = new ArrayList<>();
@@ -25,8 +27,13 @@ public class StringFinder {
   public static void main(String[] args) {
     // TODO code application logic here
     ClipboardManager.init();
+    UpdateHandler.init();
     MainWindow myWin = new MainWindow();
     myWin.setVisible(true);
+    UpdateHandler.loadVersionNotes();
+    if (UpdateHandler.updateAvailable()) {
+      UpdateHandler.promptUpdate(args);
+    }
     loadBaseDefinitions();
     while (true) {
       String s = ClipboardManager.getStringFromClipboard();
