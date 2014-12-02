@@ -34,7 +34,13 @@ public class WordStorage {
       Scanner scan = new Scanner(f);
       while (scan.hasNext()) {
         String word = scan.nextLine();
+        while (word.length() < 3) {
+          word = scan.nextLine();
+        }
         String def = scan.nextLine();
+        while (def.length() < 3) {
+          def = scan.nextLine();
+        }
         addWord(word, def);
       }
     } catch (FileNotFoundException e) {
