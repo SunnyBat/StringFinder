@@ -5,6 +5,7 @@
  */
 package stringfinder;
 
+import java.io.IOException;
 import javax.swing.JFileChooser;
 
 /**
@@ -21,6 +22,15 @@ public class MainWindow extends javax.swing.JFrame {
   public MainWindow() {
     initComponents();
     setLocationRelativeTo(null);
+  }
+
+  public void enableReplaceButton() {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        JBClipboardReplacing.setEnabled(true);
+      }
+    });
   }
 
   /**
@@ -70,6 +80,7 @@ public class MainWindow extends javax.swing.JFrame {
     });
 
     JBClipboardReplacing.setText("Enable Clipboard Replacing");
+    JBClipboardReplacing.setEnabled(false);
     JBClipboardReplacing.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         JBClipboardReplacingActionPerformed(evt);
@@ -149,8 +160,6 @@ public class MainWindow extends javax.swing.JFrame {
       System.out.println("Enter pressed!");
       JTFWord.setText(WordStorage.getWord(JTFQuestionText.getText()));
       JTFQuestionText.setText("");
-    } else {
-      System.out.println(evt.getKeyChar());
     }
   }//GEN-LAST:event_JTFQuestionTextKeyTyped
 
@@ -165,7 +174,10 @@ public class MainWindow extends javax.swing.JFrame {
     chooser.setDialogTitle("Select Definitions File");
     chooser.setVisible(true);
     if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-      WordStorage.loadDefinitions(chooser.getSelectedFile());
+      WordLoader.loadDefinitions(chooser.getSelectedFile()); // Should move to worker Thread
+      if (WordStorage.hasWords()) {
+        JBClipboardReplacing.setEnabled(true);
+      }
     } else {
       System.out.println("No Selection ");
     }
@@ -193,8 +205,14 @@ public class MainWindow extends javax.swing.JFrame {
   }//GEN-LAST:event_JCShowWordsActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    // TODO add your handling code here:
-    WordStorage.exportDefinitions();
+    try { // TODO: Switch to separate Thread later
+      String myPath = MainWindow.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+      java.io.File mainFile = new java.io.File(myPath);
+      Exporter myExport = new Exporter(new java.io.File(mainFile.getParent() + System.getProperty("file.separator") + "Definitions.txt"));
+      myExport.exportDefinitions(WordStorage.getWordList());
+    } catch (IOException iOException) {
+      iOException.printStackTrace();
+    }
   }//GEN-LAST:event_jButton1ActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

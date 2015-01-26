@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stringfinder;
 
 import java.awt.Toolkit;
@@ -18,11 +13,19 @@ public class ClipboardManager {
   private static Clipboard clipboard;
   private static int fails = 0;
 
+  /**
+   * Initializes the ClipboardManager.
+   */
   public static void init() {
     toolkit = Toolkit.getDefaultToolkit();
     clipboard = toolkit.getSystemClipboard();
   }
 
+  /**
+   * Gets the current String from the clipboard.
+   *
+   * @return The String in the clipboard, or null if not a String
+   */
   public static String getStringFromClipboard() {
     checkFails();
     try {
@@ -44,6 +47,11 @@ public class ClipboardManager {
     return null;
   }
 
+  /**
+   * Sets the clipboard contents. This overwrites anything currently in the clipboard.
+   *
+   * @param s The String to set the clipboard contents to
+   */
   public static void setClipboardContents(String s) {
     checkFails();
     try {
@@ -55,10 +63,16 @@ public class ClipboardManager {
     }
   }
 
+  /**
+   * Resets the clipboard contents.
+   */
   private static void resetClipboard() {
     setClipboardContents("");
   }
 
+  /**
+   * Checks the amount of the times in a row the program has failed. If it's failed too many times, it kills the program with error code 1.
+   */
   private static void checkFails() {
     if (fails >= 100) {
       System.out.println("ERROR: Too many consecutive fails! Exiting program.");

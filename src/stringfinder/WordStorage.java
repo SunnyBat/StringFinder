@@ -1,65 +1,35 @@
 package stringfinder;
 
-import java.io.*;
 import java.util.*;
 
 /**
+ * Stores and loads all words for the program.
  *
  * @author Sunny
  */
 public class WordStorage {
 
-  public static final String[] BASE_DEFS = {"TestWord", "ADSFASDFASDF This is a test!",
-    "SecondTest", "ASDFASDFASDF This is another test!",
-    "ThirdTest", "ASDFASDFADSF Yet another!"};
   private static final ArrayList<Word> wordList = new ArrayList<>();
 
-  public static synchronized void loadBaseDefinitions() {
-    String tempWord = null;
-    for (String s : BASE_DEFS) {
-      if (tempWord == null) {
-        tempWord = s;
-      } else {
-        addWord(tempWord, s);
-        tempWord = null;
-      }
-    }
-  }
-
-  public static synchronized void loadDefinitions(File f) {
-    if (f == null) {
+  public static synchronized void addWord(String word, String def) {
+    if (word == null || def == null) {
+      System.out.println("ERROR: Word or definition cannot be null");
+    } else if (getWord(def).equalsIgnoreCase(def)) {
+      System.out.println("ERROR: Word already added: " + word + "::" + def);
+      return;
+    } else if (word.equals("[NOT FOUND]")) {
+      System.out.println("Error -- Word cannot be [NOT FOUND] -- Skipping");
       return;
     }
-    try {
-      Scanner scan = new Scanner(f);
-      while (scan.hasNext()) {
-        String word = scan.nextLine();
-        while (word.length() < 3) {
-          word = scan.nextLine();
-        }
-        String def = scan.nextLine();
-        while (def.length() < 3) {
-          def = scan.nextLine();
-        }
-        addWord(word, def);
-      }
-    } catch (FileNotFoundException e) {
-    }
+    wordList.add(new Word(word, def));
   }
 
-  public static synchronized void exportDefinitions() {
-    try {
-      String path = StringFinder.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-      PrintStream write = new PrintStream(new File(path.substring(0, path.lastIndexOf(".jar")) + ".defs.txt"));
-      for (Word w : wordList) {
-        write.println(w.getWord());
-        write.println(w.getDefinition());
-      }
-      write.close();
-    } catch (Exception e) {
-    }
-  }
-
+  /**
+   * Gets the word associated with the given definition.
+   *
+   * @param def The definition to search for
+   * @return The word, or [NOT FOUND] if not found.
+   */
   public static synchronized String getWord(String def) {
     for (Word w : wordList) {
       if (w.getDefinition().toLowerCase().contains(def.toLowerCase())) {
@@ -69,14 +39,13 @@ public class WordStorage {
     return "[NOT FOUND]";
   }
 
-  public static synchronized void addWord(String word, String def) {
-    if (getWord(def).equalsIgnoreCase(def)) {
-      System.out.println("ERROR: Word already added: " + word + "::" + def);
-      return;
-    }
-    wordList.add(new Word(word, def));
-  }
-
+  /**
+   * Returns a new array of String arrays containing all the definitions of words. Every String array (wordList[0], for example) is guaranteed to have
+   * two non-null Strings, with index 0 being the word and index 1 being the definition. This will return a zero-length array if no words have been
+   * added.
+   *
+   * @return The array of String arrays containing all words and definitions.
+   */
   public static String[][] getWordList() {
     String[][] words = new String[wordList.size()][2];
     for (int a = 0; a < wordList.size(); a++) {
@@ -84,6 +53,15 @@ public class WordStorage {
       words[a][1] = wordList.get(a).getDefinition();
     }
     return words;
+  }
+
+  /**
+   * Checks whether or not the program has words added to it.
+   *
+   * @return True if the program has words, false if not
+   */
+  public static boolean hasWords() {
+    return getWordList().length > 0;
   }
 
   private static class Word {
