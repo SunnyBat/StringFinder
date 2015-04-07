@@ -179,7 +179,7 @@ public class MainWindow extends javax.swing.JFrame {
         JBClipboardReplacing.setEnabled(true);
       }
     } else {
-      System.out.println("No Selection ");
+      System.out.println("No Selection");
     }
   }//GEN-LAST:event_JBLoadDefsFromFileActionPerformed
 

@@ -30,7 +30,7 @@ public class ClipboardManager {
     checkFails();
     try {
       String result = (String) clipboard.getData(DataFlavor.stringFlavor);
-      if (result.length() < 15) {
+      if (result.length() < 5 || WordStorage.isWord(result)) {
         return null;
       }
       System.out.println("String from Clipboard: " + result);

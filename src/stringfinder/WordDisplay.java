@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stringfinder;
 
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +7,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Sunny
  */
 public class WordDisplay extends javax.swing.JFrame {
+
+  //JPopupMenu code basically copied from http://www.java2s.com/Code/Java/Swing-JFC/AsimpleexampleofJPopupMenu.htm
+  public javax.swing.JPopupMenu popup;
 
   /**
    * Creates new form WordDisplay
@@ -26,6 +24,34 @@ public class WordDisplay extends javax.swing.JFrame {
       }
       model.addRow(sArray);
     }
+    popup = new javax.swing.JPopupMenu();
+    java.awt.event.ActionListener menuListener = new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent event) {
+        System.out.println("Popup menu item [" + event.getActionCommand() + "] was pressed.");
+        System.out.println(event);
+        System.out.println(event.getSource());
+        if (event.getActionCommand().equals("Edit")) {
+          System.out.println("Not supported yet.");
+        } else if (event.getActionCommand().equals("Remove from List")) {
+          System.out.println("PS: " + event.paramString());
+//          WordStorage.removeWord(event.paramString());
+        }
+      }
+    };
+    javax.swing.JMenuItem item;
+    popup.add(item = new javax.swing.JMenuItem("Edit"));
+    item.setHorizontalTextPosition(javax.swing.JMenuItem.RIGHT);
+    item.addActionListener(menuListener);
+    popup.add(item = new javax.swing.JMenuItem("Remove from List"));
+    item.setHorizontalTextPosition(javax.swing.JMenuItem.RIGHT);
+    item.addActionListener(menuListener);
+//    popup.addSeparator();
+//    popup.add(item = new javax.swing.JMenuItem("Settings . . ."));
+//    item.addActionListener(menuListener);
+
+    popup.setLabel("Justification");
+    popup.setBorder(new javax.swing.border.BevelBorder(javax.swing.border.BevelBorder.RAISED));
+
     setLocationRelativeTo(null);
     setVisible(true);
   }
@@ -73,6 +99,11 @@ public class WordDisplay extends javax.swing.JFrame {
     });
     JTWords.setColumnSelectionAllowed(true);
     JTWords.getTableHeader().setReorderingAllowed(false);
+    JTWords.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseReleased(java.awt.event.MouseEvent evt) {
+        JTWordsMouseReleased(evt);
+      }
+    });
     jScrollPane1.setViewportView(JTWords);
     JTWords.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -97,6 +128,14 @@ public class WordDisplay extends javax.swing.JFrame {
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
+
+  private void JTWordsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTWordsMouseReleased
+    // TODO add your handling code here:
+    if (evt.isPopupTrigger()) {
+        popup.show(this, evt.getX(), evt.getY());
+        System.out.println("POPUP");
+    }
+  }//GEN-LAST:event_JTWordsMouseReleased
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JTable JTWords;
